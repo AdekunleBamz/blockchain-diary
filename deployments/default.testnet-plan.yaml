@@ -11,7 +11,7 @@ plan:
         - contract-publish:
             contract-name: story
             expected-sender: ST1HGXPGWSHPHW3PNC66FWQ5VG1PFNYKBCSCQ7WMJ
-            cost: 1392534
+            cost: 22260
             path: contracts/story.clar
             anchor-block-only: true
             clarity-version: 4
