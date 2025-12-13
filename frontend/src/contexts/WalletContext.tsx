@@ -22,12 +22,12 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const connectWallet = async () => {
     try {
       const connectionResponse: GetAddressesResult = await connect();
-      // addresses[2] is the testnet address
-      const testnetAddress = connectionResponse.addresses[2]?.address || connectionResponse.addresses[0]?.address;
+      // addresses[0] is the mainnet address
+      const mainnetAddress = connectionResponse.addresses[0]?.address;
       
       setIsConnected(true);
       setWalletInfo(connectionResponse);
-      setAddress(testnetAddress || null);
+      setAddress(mainnetAddress || null);
     } catch (error) {
       console.error('Failed to connect wallet:', error);
     }

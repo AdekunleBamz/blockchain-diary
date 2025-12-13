@@ -17,7 +17,7 @@ A collaborative storytelling dApp built on the Stacks blockchain where users con
 ### Smart Contract
 - **Clarity 4**: Latest version of the Clarity language
 - **Clarinet**: Development and testing framework
-- **Deployed on Stacks Testnet**
+- **Deployed on Stacks Mainnet**
 
 ### Frontend
 - **React 19**: Modern React with hooks
@@ -118,9 +118,9 @@ The built files will be in `frontend/dist/`
 
 ## Contract Details
 
-### Contract Address (Testnet)
+### Contract Address (Mainnet)
 ```
-ST1HGXPGWSHPHW3PNC66FWQ5VG1PFNYKBCSCQ7WMJ.story
+SP1HGXPGWSHPHW3PNC66FWQ5VG1PFNYKBCV82FWNK.story
 ```
 
 ### Public Functions
@@ -176,12 +176,14 @@ The app automatically polls the contract every 10 seconds to fetch new words. Af
 
 ### Contract Deployment
 
-The contract is deployed to Stacks Testnet. To deploy:
+The contract is deployed to Stacks Mainnet. To deploy:
 
 ```bash
-clarinet deployment generate --testnet
-clarinet deployment apply --testnet
+clarinet deployment generate --mainnet --medium-cost
+clarinet deployment apply --mainnet
 ```
+
+**Note**: Ensure your mainnet account has sufficient STX for deployment fees (~0.02-0.1 STX).
 
 
 Update the contract address in `frontend/src/constants.ts` if deploying to a different network.
