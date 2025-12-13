@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { useWallet } from '../contexts/WalletContext';
 
-export function AddWord() {
+interface AddWordProps {
+  onWordAdded?: () => void;
+}
+
+export function AddWord({ onWordAdded }: AddWordProps) {
   const { isConnected } = useWallet();
   const [word, setWord] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +19,7 @@ export function AddWord() {
     console.log('Adding word:', word);
     setIsLoading(false);
     setWord('');
+    onWordAdded?.();
   };
 
   return (
