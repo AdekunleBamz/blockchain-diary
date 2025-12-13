@@ -53,8 +53,8 @@ export function useStory() {
         senderAddress: CONTRACT_ADDRESS,
       });
 
-      // Debug: log the raw result
-      console.log('Raw ClarityValue result:', JSON.stringify(result, null, 2));
+      // Debug: log the raw result (avoid JSON.stringify due to BigInt)
+      console.log('Raw ClarityValue result:', result);
       console.log('Result type:', result?.type, 'typeName:', result?.typeName);
 
       // The result should be a ResponseOk containing a List
@@ -145,20 +145,44 @@ export function useStory() {
   const extractValue = (value: any): string | number | null => {
     if (value === null || value === undefined) return null;
     
+    // Handle BigInt - convert to number
+    if (typeof value === 'bigint') {
+      return Number(value);
+    }
+    
     // If it's already a primitive, return it
     if (typeof value === 'string' || typeof value === 'number') return value;
     
     // Try different possible structures
-    if (value.value !== undefined) return value.value;
-    if (value.data !== undefined) return value.data;
-    if (value.type === 'stringAscii' && value.value !== undefined) return value.value;
-    if (value.type === 'principal' && value.value !== undefined) return value.value;
-    if (value.type === 'uint' && value.value !== undefined) return value.value;
+    if (value.value !== undefined) {
+      const val = value.value;
+      // Handle BigInt in nested values
+      if (typeof val === 'bigint') return Number(val);
+      return val;
+    }
+    if (value.data !== undefined) {
+      const val = value.data;
+      if (typeof val === 'bigint') return Number(val);
+      return val;
+    }
+    if (value.type === 'stringAscii' && value.value !== undefined) {
+      return value.value;
+    }
+    if (value.type === 'principal' && value.value !== undefined) {
+      return value.value;
+    }
+    if (value.type === 'uint' && value.value !== undefined) {
+      const val = value.value;
+      if (typeof val === 'bigint') return Number(val);
+      return val;
+    }
     
     // If it's an object with a single property, try that
     const keys = Object.keys(value);
     if (keys.length === 1 && keys[0] !== 'type' && keys[0] !== 'typeName') {
-      return value[keys[0]];
+      const val = value[keys[0]];
+      if (typeof val === 'bigint') return Number(val);
+      return val;
     }
     
     return null;
