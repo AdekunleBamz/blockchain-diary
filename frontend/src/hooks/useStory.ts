@@ -70,10 +70,14 @@ export function useStory() {
           tuple = item.value || item.data || item;
         }
 
-        // Extract tuple fields
-        const word = extractValue(tuple?.word) || extractValue(tuple?.['word']) || '';
-        const sender = extractValue(tuple?.sender) || extractValue(tuple?.['sender']) || '';
-        const timestamp = Number(extractValue(tuple?.timestamp) || extractValue(tuple?.['timestamp']) || 0);
+        // Extract tuple fields - ensure word and sender are strings
+        const wordValue = extractValue(tuple?.word) || extractValue(tuple?.['word']) || '';
+        const senderValue = extractValue(tuple?.sender) || extractValue(tuple?.['sender']) || '';
+        const timestampValue = extractValue(tuple?.timestamp) || extractValue(tuple?.['timestamp']) || 0;
+
+        const word: string = String(wordValue);
+        const sender: string = String(senderValue);
+        const timestamp: number = Number(timestampValue);
 
         return { word, sender, timestamp };
       });
@@ -81,11 +85,17 @@ export function useStory() {
 
     // If it's already an array, parse it directly
     if (Array.isArray(cv)) {
-      return cv.map((item: any) => ({
-        word: extractValue(item.word) || '',
-        sender: extractValue(item.sender) || '',
-        timestamp: Number(extractValue(item.timestamp) || 0),
-      }));
+      return cv.map((item: any) => {
+        const wordValue = extractValue(item.word) || '';
+        const senderValue = extractValue(item.sender) || '';
+        const timestampValue = extractValue(item.timestamp) || 0;
+
+        return {
+          word: String(wordValue),
+          sender: String(senderValue),
+          timestamp: Number(timestampValue),
+        };
+      });
     }
 
     // Try to access data property
