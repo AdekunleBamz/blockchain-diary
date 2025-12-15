@@ -25,3 +25,35 @@
 ;; Counter for generating unique story IDs
 (define-data-var next-story-id uint u1)
 
+;; ------------------------------------------------------------
+;; PUBLIC FUNCTION: Create a new story
+;; ------------------------------------------------------------
+(define-public (create-story (title (string-ascii 100)) (description (string-ascii 500)))
+    (let (
+        (sender tx-sender)
+        (story-id (var-get next-story-id))
+        (time u0)
+    )
+        (begin
+            ;; Validate title is not empty
+            (asserts! (> (len title) u0) ERR-INVALID-TITLE)
+            
+            ;; Create new story entry
+            (map-set stories {
+                id: story-id,
+                title: title,
+                description: description,
+                creator: sender,
+                created-at: time,
+                status: "active",
+                word-count: u0
+            })
+            
+            ;; Increment story ID counter
+            (var-set next-story-id (+ story-id u1))
+            
+            (ok { id: story-id, title: title })
+        )
+    )
+)
+
