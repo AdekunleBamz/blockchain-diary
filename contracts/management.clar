@@ -57,3 +57,15 @@
     )
 )
 
+;; ------------------------------------------------------------
+;; PUBLIC VIEW: Get story details by ID
+;; ------------------------------------------------------------
+(define-read-only (get-story (story-id uint))
+    (let ((story (map-get? stories { id: story-id })))
+        (if (is-none story)
+            ERR-STORY-NOT-FOUND
+            (ok (unwrap-panic story))
+        )
+    )
+)
+
