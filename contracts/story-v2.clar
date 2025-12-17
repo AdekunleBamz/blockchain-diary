@@ -17,6 +17,16 @@
 (define-constant DEFAULT-CATEGORY "general")
 
 ;; ------------------------------------------------------------
+;; INTERNAL: Get current timestamp
+;; For now this is a simple placeholder (u0). It is factored out
+;; so it can be easily updated later if block time usage changes.
+;; ------------------------------------------------------------
+(define-private (get-now)
+  u0
+)
+
+
+;; ------------------------------------------------------------
 ;; DATA: Auto-incrementing ID counter for words
 ;; Starts at 0; each new word uses the current value, then increments.
 ;; ------------------------------------------------------------
