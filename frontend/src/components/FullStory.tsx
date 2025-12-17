@@ -31,6 +31,9 @@ export function FullStory({ story, isLoading }: FullStoryProps) {
 
   const storyText = story.map((entry) => entry.word).join(' ');
 
+  // Group words by category for display
+  const categories = Array.from(new Set(story.map((entry) => entry.category)));
+
   return (
     <section className="story-section">
       <h2>Full Story</h2>
@@ -39,6 +42,12 @@ export function FullStory({ story, isLoading }: FullStoryProps) {
       </div>
       <p className="story-meta">
         {story.length} {story.length === 1 ? 'word' : 'words'}
+        {categories.length > 0 && (
+          <span className="categories-info">
+            {' • '}
+            Categories: {categories.join(', ')}
+          </span>
+        )}
       </p>
     </section>
   );
