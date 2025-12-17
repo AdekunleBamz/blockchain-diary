@@ -103,6 +103,24 @@
   (ok (var-get next-word-id))
 )
 
+;; ------------------------------------------------------------
+;; READ-ONLY: Get the latest word id (if any)
+;; - Returns (ok some-id) when at least one word exists.
+;; - Returns ERR-WORD-NOT-FOUND when there are no words yet.
+;; ------------------------------------------------------------
+(define-read-only (get-latest-id)
+  (let
+    (
+      (count (var-get next-word-id))
+    )
+    (if (= count u0)
+        ERR-WORD-NOT-FOUND
+        (ok (- count u1))
+    )
+  )
+)
+
+
 
 
 
