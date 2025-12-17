@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { fetchCallReadOnlyFunction } from '@stacks/transactions';
+import { fetchCallReadOnlyFunction, Cl } from '@stacks/transactions';
 import { CONTRACT_ADDRESS, CONTRACT_NAME, NETWORK } from '../constants';
 import type { StoryEntry } from '../types';
 
@@ -47,7 +47,7 @@ export function useStory() {
           contractAddress: CONTRACT_ADDRESS,
           contractName: CONTRACT_NAME,
           functionName: 'get-word',
-          functionArgs: [id],
+        functionArgs: [Cl.uint(id)],
           network: NETWORK,
           senderAddress: CONTRACT_ADDRESS,
         });
