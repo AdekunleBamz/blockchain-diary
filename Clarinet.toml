@@ -6,7 +6,7 @@ telemetry = true
 cache_dir = './.cache'
 requirements = []
 [contracts.story]
-path = 'contracts/story.clar'
+path = 'contracts/story-v2.clar'
 clarity_version = 4
 epoch = 'latest'
 [repl.analysis]
