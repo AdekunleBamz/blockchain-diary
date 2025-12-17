@@ -12,6 +12,10 @@
 ;; Error codes
 (define-constant ERR-WORD-NOT-FOUND (err u300))
 
+;; Default category used when caller does not provide one
+;; or provides an empty string.
+(define-constant DEFAULT-CATEGORY "general")
+
 ;; ------------------------------------------------------------
 ;; DATA: Auto-incrementing ID counter for words
 ;; Starts at 0; each new word uses the current value, then increments.
