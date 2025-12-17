@@ -18,6 +18,7 @@
 ;; Error codes
 (define-constant ERR-WORD-NOT-FOUND (err u300))
 (define-constant ERR-INVALID-WORD (err u301))
+(define-constant ERR-INVALID-CATEGORY (err u302))
 
 ;; Default category used when caller does not provide one
 ;; or provides an empty string.
@@ -67,6 +68,8 @@
     (begin
       ;; ensure the word is not empty
       (asserts! (> (len word) u0) ERR-INVALID-WORD)
+      ;; basic validation: category (after normalization) must not be empty
+      (asserts! (> (len final-category) u0) ERR-INVALID-CATEGORY)
       ;; store the new word
       (map-set words
         { id: id }
