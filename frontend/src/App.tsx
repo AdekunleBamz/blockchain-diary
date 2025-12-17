@@ -3,6 +3,7 @@ import { WalletConnection } from './components/WalletConnection';
 import { AddWord } from './components/AddWord';
 import { FullStory } from './components/FullStory';
 import { Contributors } from './components/Contributors';
+import { StreakDisplay } from './components/StreakDisplay';
 import { useStory } from './hooks/useStory';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
 
         <main className="main-content">
           <AddWord onWordAdded={refetch} />
+          <StreakDisplay story={story} />
           <FullStory story={story} isLoading={isLoading} />
           <Contributors story={story} isLoading={isLoading} />
         </main>
