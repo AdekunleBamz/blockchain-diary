@@ -8,6 +8,12 @@
 ;;     - timestamp : uint
 ;;     - category  : (string-ascii 32), e.g. "general", "tech"
 ;; ------------------------------------------------------------
+;; Example usage (frontend):
+;; 1. Call (add-word "hello" "general")
+;; 2. Get total count with (get-word-count)
+;; 3. Iterate ids [0..count-1] and call (get-word id)
+;; 4. Use timestamps per sender to compute client-side streaks
+;; ------------------------------------------------------------
 
 ;; Error codes
 (define-constant ERR-WORD-NOT-FOUND (err u300))
