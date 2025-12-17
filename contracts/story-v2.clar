@@ -120,6 +120,23 @@
   )
 )
 
+;; ------------------------------------------------------------
+;; READ-ONLY: Get the latest word entry (if any)
+;; - Uses get-latest-id to find the most recent id.
+;; - Returns ERR-WORD-NOT-FOUND when there are no words yet.
+;; ------------------------------------------------------------
+(define-read-only (get-latest-word)
+  (let
+    (
+      (latest-id-result (get-latest-id))
+    )
+    (match latest-id-result
+      latest-id (get-word latest-id)
+      err ERR-WORD-NOT-FOUND
+    )
+  )
+)
+
 
 
 
