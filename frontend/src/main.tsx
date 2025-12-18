@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import './utils/fetchSetup' // Initialize fetch override for API key
 import App from './App.tsx'
 import { WalletProvider } from './contexts/WalletContext.tsx'
 

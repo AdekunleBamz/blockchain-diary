@@ -7,7 +7,7 @@ import type {
 
 import { useState, useEffect, useRef } from 'react';
 import { fetchCallReadOnlyFunction, Cl } from '@stacks/transactions';
-import { CONTRACT_ADDRESS, CONTRACT_NAME, NETWORK, HIRO_API_KEY } from '../constants';
+import { CONTRACT_ADDRESS, CONTRACT_NAME, NETWORK } from '../constants';
 import type { StoryEntry } from '../types';
 
 
@@ -27,24 +27,6 @@ const RATE_LIMIT_WAIT_MS = 30000; // 30 seconds wait for per-minute rate limits
 
 // Helper function to delay execution
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-// Create a custom fetch function that includes the API key header
-const createFetchWithApiKey = (apiKey: string) => {
-  if (!apiKey) {
-    // If no API key, return default fetch
-    return fetch;
-  }
-  
-  return async (url: string | Request | URL, init?: RequestInit): Promise<Response> => {
-    const headers = new Headers(init?.headers);
-    headers.set('x-api-key', apiKey);
-    
-    return fetch(url, {
-      ...init,
-      headers,
-    });
-  };
-};
 
 // Helper function to retry with exponential backoff
 const retryWithBackoff = async <T>(
@@ -114,10 +96,8 @@ export function useStory() {
       }
       setError(null);
 
-      // Create fetch function with API key if available
-      const customFetch = createFetchWithApiKey(HIRO_API_KEY);
-
       // 1) Get total number of words from story-v2 with retry logic
+      // Note: API key is automatically added via global fetch override in fetchSetup.ts
       const countResult = await retryWithBackoff(async () => {
         return await fetchCallReadOnlyFunction({
           contractAddress: CONTRACT_ADDRESS,
@@ -126,7 +106,6 @@ export function useStory() {
           functionArgs: [],
           network: NETWORK,
           senderAddress: CONTRACT_ADDRESS,
-          ...(HIRO_API_KEY && { fetch: customFetch }),
         });
       });
 
@@ -157,7 +136,6 @@ export function useStory() {
             functionArgs: [Cl.uint(id)],
             network: NETWORK,
             senderAddress: CONTRACT_ADDRESS,
-            ...(HIRO_API_KEY && { fetch: customFetch }),
           });
         });
 
