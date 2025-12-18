@@ -4,3 +4,7 @@ export const CONTRACT_NAME = 'story-v2';
 export const NETWORK = 'mainnet' as const;
 export const API_URL = 'https://api.hiro.so';
 
+// Hiro API Key from environment variable
+// Set this in your .env file as VITE_HIRO_API_KEY=your_api_key_here
+export const HIRO_API_KEY = import.meta.env.VITE_HIRO_API_KEY || '';
+
